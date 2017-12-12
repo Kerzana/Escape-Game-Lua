@@ -110,6 +110,7 @@ end
 end
 
 function resolvSudoku(tableau,line,column)
+    printtableau(tableau)
     tmpre = 0
     for line = line, 9 do
         if tmpre == 2 then
@@ -120,7 +121,6 @@ function resolvSudoku(tableau,line,column)
             if tableau[line][column] == "-" then
                 for case = 1, 9 do
                     tableau[line][column] = case
-                    --printtableau(tableau)
                     tmp = checkValid(tableau,line,column)
                     if  tmp == true then
                     	relosv = resolvSudoku(tableau,line,column+1)
@@ -173,7 +173,7 @@ end
 function sudoku()
 	term.clear()
 	term.setCursorPos(1,1)
-	blue = sudokutotable("1----7-9-\n-3--2---8\n--96--5--\n--53--9--\n-1--8---2\n6----4---\n3------1-\n-4------7\n--7---3--\n")
+	blue = sudokutotable("-6--7---3\n---2---75\n-1-35----\n--4--25--\n-2--4--9-\n--71--4--\n----98-4-\n98---7---\n4---1--6-\n")
 	if blue == false then
 	    term.clear()
 	    term.setCursorPos(1,1)
@@ -184,29 +184,4 @@ function sudoku()
 	printtableau(blue)
 end
 
-function timer()
-	x = 0
-	y = 0
-	z = 0
-	w = 1
-	while w do
-		term.setCursorPos(28,18)
-		x = x + 1
-		if x >= 60 then
-			x = 0
-			y = y + 1
-		end
-		if y >= 60 then
-			y = 0
-			z = y + 1
-		end
-		if z == 60 then
-			w = 0
-		end
-		term.write(z.."h:"..y.."m:"..x.."s")
-		sleep(1)
-	end
-	return true
-end
-
-re = parallel.waitForAll(sudoku,timer)
+sudoku()
