@@ -1,4 +1,4 @@
-function checkColumn(tableau,line,column)
+function checkColumn(tableau, line, column)
     errror = 0
     for linecheck = 1, 9 do
         if tableau[linecheck][column] ~= "-" then
@@ -13,7 +13,7 @@ function checkColumn(tableau,line,column)
     return true
 end
 
-function checkLine(tableau,line,column)
+function checkLine(tableau, line, column)
     failure = 0
     for checkcolumn = 1, 9 do
         if tableau[line][checkcolumn] ~= "-" then
@@ -28,10 +28,10 @@ function checkLine(tableau,line,column)
     return true
 end
 
-function checkBox(tableau,line,column)
+function checkBox(tableau, line, column)
     minLine = 0
     maxline = 0
-    if  line >= 1 and line <= 3 then
+    if line >= 1 and line <= 3 then
         minLine = 1
         maxline = 3
     else if line >= 4 and line <= 6 then
@@ -46,7 +46,7 @@ function checkBox(tableau,line,column)
     end
     mincolumn = 0
     maxcolumn = 0
-    if  column >= 1 and column <= 3 then
+    if column >= 1 and column <= 3 then
         mincolumn = 1
         maxcolumn = 3
     else if column >= 4 and column <= 6 then
@@ -75,27 +75,38 @@ function checkBox(tableau,line,column)
     return true
 end
 
-function checkValid(tableau,i,j)
-    return(checkBox(tableau,i,j) and checkColumn(tableau,i,j) and checkLine(tableau,i,j))
+function checkValid(tableau, i, j)
+    return (checkBox(tableau, i, j) and checkColumn(tableau, i, j) and checkLine(tableau, i, j))
 end
 
 function printtableau(tableau)
-    term.setCursorPos(1,1)
+    term.setCursorPos(1, 1)
     x = 0
     for w = 1, 9 do
-        term.setCursorPos(1,x)
+        term.setCursorPos(1, x)
+        if w == 4 or w == 7 then
+            term.setTextColor(colors.orange)
+        else
+            term.setTextColor(colors.blue)
+        end
         term.write("------------------")
-        term.setCursorPos(1,x + 1)
+        term.setTextColor(colors.white)
+        term.setCursorPos(1, x + 1)
         for z = 1, 9 do
-            term.write(tableau[w][z].."|")
+            term.write(tableau[w][z])
+            if z == 3 or z == 6 then
+                term.setTextColor(colors.orange)
+            else
+                term.setTextColor(colors.blue)
+            end
+            term.write("|")
+            term.setTextColor(colors.white)
         end
         x = x + 2
     end
 end
 
-function resolvSudoku(tableau,line,column)
-    sleep(0)
-    printtableau(tableau)
+function resolvSudoku(tableau, line, column)
     tmpre = 0
     for line = line, 9 do
         if tmpre == 2 then
@@ -106,18 +117,20 @@ function resolvSudoku(tableau,line,column)
             if tableau[line][column] == "-" then
                 for case = 1, 9 do
                     tableau[line][column] = case
-                    printtableau(tableau)
-                    tmp = checkValid(tableau,line,column)
-                    if  tmp == true then
-                        if resolvSudoku(tableau,line,column+1) == true then
+                    --printtableau(tableau)
+                    tmp = checkValid(tableau, line, column)
+                    if tmp == true then
+                        relosv = resolvSudoku(tableau, line, column + 1)
+                        if relosv == true then
                             return false
-                        else if resolvSudoku(tableau,line,column+1) == tableau then
-                        	return tableau
+                        else if relosv == tableau then
+                            return tableau
                         end
                         end
                     end
                     if case == 9 then
                         tableau[line][column] = "-"
+                        sleep(0)
                         return false
                     end
                 end
@@ -130,52 +143,43 @@ end
 
 function sudokutotable(arg)
     tableau = {
-        [0] = {[1]="-", [2]="-", [3]="-", [4]="-", [5]="-", [6]="-", [7]="-", [8]="-", [9]="-"}
+        [0] = { [1] = "-", [2] = "-", [3] = "-", [4] = "-", [5] = "-", [6] = "-", [7] = "-", [8] = "-", [9] = "-" }
     }
 
     for y = 1, 9 do
         tableau[y] = {}
         for i = 1, 10 do
-            table.insert(tableau[y],i,string.char(string.byte(arg, i)))
+            table.insert(tableau[y], i, string.char(string.byte(arg, i)))
         end
-        arg = string.sub(arg,11,arg:len())
+        arg = string.sub(arg, 11, arg:len())
     end
 
     for n = 1, 9 do
         for b = 1, 9 do
-            if checkValid(tableau,n,b) then
+            if checkValid(tableau, n, b) then
             else
                 return false
             end
         end
     end
 
-    finishtableau = resolvSudoku(tableau,1,1)
+    finishtableau = resolvSudoku(tableau, 1, 1)
     return finishtableau
 end
 
 
 
+term.clear()
+term.setCursorPos(1, 1)
 
-
-blue = sudokutotable("213597-6-\n7-6-81325\n-543-6917\n9426-87--\n63-17--42\n178234596\n5618-3-79\n3-976215-\n-27-15683")
+blue = sudokutotable("1----7-9-\n-3--2---8\n--96--5--\n--53--9--\n-1--8---2\n6----4---\n3------1-\n-4------7\n--7---3--\n")
 
 if blue == false then
     term.clear()
-    term.setCursorPos(1,1)
+    term.setCursorPos(1, 1)
     term.write("Error No Valid Sudoku.")
     return false
 end
 
 term.clear()
-term.setCursorPos(1,1)
-x = 0
-for w = 1, 9 do
-    term.setCursorPos(1,x)
-    term.write("------------------")
-    term.setCursorPos(1,x + 1)
-    for z = 1, 9 do
-        term.write(blue[w][z].."|")
-    end
-    x = x + 2
-end
+printtableau(blue)
