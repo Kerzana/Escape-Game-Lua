@@ -94,7 +94,7 @@ function printtableau(tableau)
 end
 
 function resolvSudoku(tableau,line,column)
-	sleep(0)
+    sleep(0)
     printtableau(tableau)
     tmpre = 0
     for line = line, 9 do
@@ -111,6 +111,9 @@ function resolvSudoku(tableau,line,column)
                     if  tmp == true then
                         if resolvSudoku(tableau,line,column+1) == true then
                             return false
+                        else if resolvSudoku(tableau,line,column+1) == tableau then
+                        	return tableau
+                        end
                         end
                     end
                     if case == 9 then
@@ -155,7 +158,7 @@ end
 
 
 
-blue = sudokutotable("9---1---5\n--6-9-2-1\n8---4----\n----8----\n---7-----\n----26--9\n2--3----6\n---2--9--\n--19-457-\n")
+blue = sudokutotable("213597-6-\n7-6-81325\n-543-6917\n9426-87--\n63-17--42\n178234596\n5618-3-79\n3-976215-\n-27-15683")
 
 if blue == false then
     term.clear()
