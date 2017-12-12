@@ -33,13 +33,13 @@ function checkBox(tableau,line,column)
     maxline = 0
     if  line >= 1 and line <= 3 then
         minLine = 1
-        m = 3
+        maxline = 3
     else if line >= 4 and line <= 6 then
         minLine = 4
-        m = 6
+        maxline = 6
     else if line >= 7 and line <= 9 then
         minLine = 7
-        m = 9
+        maxline = 9
     else
     end
     end
@@ -94,7 +94,7 @@ function printtableau(tableau)
 end
 
 function resolvSudoku(tableau,line,column)
-    sleep(0)
+	sleep(0)
     printtableau(tableau)
     tmpre = 0
     for line = line, 9 do
