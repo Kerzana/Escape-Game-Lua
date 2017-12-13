@@ -126,7 +126,7 @@ function printtableau(tableau)
 	term.write("-------------------")
 	term.setTextColor(colors.blue)
 	if l == 0 then
-		term.setCursorPos(25,5)
+		term.setCursorPos(22,5)
 		term.write("Sudoku Terminer Gg.")
 		return true
 	end
@@ -213,7 +213,7 @@ function start()
 				worktableau[math.floor(y/2)][math.floor(x/2)] = tonumber(tmp)
 			end
 		elseif clickEvent(readfile(),x,y) == exitsudoku then
-			term.setCursorPos(25,5)
+			term.setCursorPos(22,5)
 			term.write("Exit Programme.")
 			local h = fs.open("tableausave","w")
 			for i = 1, 9 do
