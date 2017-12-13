@@ -144,19 +144,7 @@ function resolvSudoku(tableau,line,column)
     return tableau
 end
 
-function sudokutotable(arg)
-    tableau = {
-        [0] = {[1]="-", [2]="-", [3]="-", [4]="-", [5]="-", [6]="-", [7]="-", [8]="-", [9]="-"}
-    }
-
-    for y = 1, 9 do
-        tableau[y] = {}
-        for i = 1, 10 do
-            table.insert(tableau[y],i,string.char(string.byte(arg, i)))
-        end
-        arg = string.sub(arg,11,arg:len())
-    end
-
+function sudokutotable(tableau)
     for n = 1, 9 do
         for b = 1, 9 do
             if checkValid(tableau,n,b) then
@@ -173,7 +161,23 @@ end
 function sudoku()
 	term.clear()
 	term.setCursorPos(1,1)
-	blue = sudokutotable("-6--7---3\n---2---75\n-1-35----\n--4--25--\n-2--4--9-\n--71--4--\n----98-4-\n98---7---\n4---1--6-\n")
+	tableau = {
+		[0] = {}
+	}
+	local h = fs.open("tableau","r")
+	for	b = 1, 9 do
+		tableau[b] = {}
+		for a = 1, 9 do
+			line = h.readLine()
+			--arg = string.sub(arg,11,arg:len())
+				line = string.sub(line,0,1)
+				print(line)
+			table.insert(tableau[b],a,line)
+		end
+	end
+	h.close()
+	tablecheck = tableau
+	blue = sudokutotable(tablecheck)
 	if blue == false then
 	    term.clear()
 	    term.setCursorPos(1,1)
