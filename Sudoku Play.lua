@@ -100,13 +100,14 @@ function printtableau(tableau)
 			old = readfile()
 			if old[w][z] == "-" and checkValid(tableau,w,z) and tonumber(tableau[w][z]) > 0 and tonumber(tableau[w][z]) < 10 then
 				term.setTextColor(colors.blue)
-			else
-				term.setTextColor(colors.red)
+			elseif checkValid(tableau,w,z) ~= true then
+				term.setTextColor(colors.purple)
+				l = 2
 			end
 			if tableau[w][z] == "-" then
 			l = 2
 				term.setTextColor(colors.lightGray)
-			elseif tonumber(tableau[w][z]) > 0 and tonumber(tableau[w][z]) < 10 and tonumber(old[w][z]) > 0 and tonumber(old[w][z]) < 10 then
+			elseif tonumber(tableau[w][z]) > 0 and tonumber(tableau[w][z]) < 10 and tonumber(old[w][z]) > 0 and tonumber(old[w][z]) < 10 and l == 0 then
 				term.setTextColor(colors.yellow)
 			end
 			term.write(tableau[w][z])
