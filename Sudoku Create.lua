@@ -180,18 +180,18 @@ end
 
 function resolvSudokurev(tableau,line,column)
     tmpre = 0
-    for line = line, 1, -1 do
+    for line = line, 9 do
         if tmpre == 2 then
             column = 1
         end
         tmpre = 2
-        for column = column, 1, -1 do
+        for column = column, 9 do
             if tableau[line][column] == "-" then
                 for case = 1, 9 do
-                    tableau[line][column] = case
+                    tableau[line][column] = math.random(1,9)
                     tmp = checkValid(tableau,line,column)
                     if  tmp == true then
-                    	relosv = resolvSudokurev(tableau,line,column-1)
+                    	relosv = resolvSudokurev(tableau,line,column+1)
                         if relosv == true then
                             return false
                         else if relosv == tableau then
