@@ -93,15 +93,25 @@ for w = 1, 9 do
     term.setTextColor(colors.yellow)
     term.setCursorPos(1,x + 1)
     for z = 1, 9 do
-    	if tableau[w][z] == "-" then
-    		term.setTextColor(colors.lightGray)
+	old = readfile()
+	if old[w][z] == "-" and checkValid(tableau,w,z) and tonumber(tableau[w][z]) > 0 and tonumber(tableau[w][z]) < 10 then
+		term.setTextColor(colors.blue)
+	elseif checkValid(tableau,w,z) ~= true then
+		term.setTextColor(colors.purple)
+		l = 2
+	end
+	if tableau[w][z] == "-" then
+	l = 2
+		term.setTextColor(colors.lightGray)
+	elseif tonumber(tableau[w][z]) > 0 and tonumber(tableau[w][z]) < 10 and tonumber(old[w][z]) > 0 and tonumber(old[w][z]) < 10 and l == 0 then
+		term.setTextColor(colors.yellow)
+	end
+        term.write(tableau[w][z])
+        if z == 3 or z == 6 then
+    		term.setTextColor(colors.red)
+    	else
+    		term.setTextColor(colors.gray)
     	end
-        	term.write(tableau[w][z])
-        	if z == 3 or z == 6 then
-    			term.setTextColor(colors.red)
-    		else
-    			term.setTextColor(colors.gray)
-    		end
     	term.write("|")
     	term.setTextColor(colors.yellow)
     end
