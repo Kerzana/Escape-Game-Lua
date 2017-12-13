@@ -196,6 +196,14 @@ function sudoku()
 	end
 	term.clear()
 	printtableau(blue)
+	local h = fs.open("tableausave","w")
+	for i = 1, 9 do
+		for j = 1, 9 do
+			h.write(blue[i][j])
+			h.write("\n")
+		end
+	end
+	h.close()
 end
 
 sudoku()
