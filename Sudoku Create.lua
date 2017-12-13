@@ -191,7 +191,7 @@ function resolvSudokurev(tableau,line,column)
                     tableau[line][column] = case
                     tmp = checkValid(tableau,line,column)
                     if  tmp == true then
-                    	relosv = resolvSudokurev(tableau,line,column+1)
+                    	relosv = resolvSudokurev(tableau,line,column-1)
                         if relosv == true then
                             return false
                         else if relosv == tableau then
